@@ -6,9 +6,11 @@
 \usage{
 plot_covbal(
   data,
-  method = c("lm", "loess", "gam", "quad"),
-  running_variable,
+  rv,
   cov,
+  aggregate = T,
+  geom = "point",
+  fit_method = "lm",
   binwidth = NULL,
   cutoff,
   ...
@@ -17,19 +19,33 @@ plot_covbal(
 \arguments{
 \item{data}{Data to use for covariate balance checks}
 
-\item{method}{Method to use for balance checks}
-
-\item{running_variable}{running variable to use for checks}
+\item{rv}{The running variable to use in the discontinuity}
 
 \item{cov}{Vector of covariate names to plot}
 
-\item{...}{other parameters to pass to function}
+\item{aggregate}{Whether to aggregate observations within each bin for visualization purposes}
+
+\item{geom}{Representation binned points, the name of any geom.
+See [the ggplot2 website](https://ggplot2.tidyverse.org/reference/)}
+
+\item{fit_method}{Method to use to fit regression line for balance checks}
+
+\item{...}{other parameters to be passed to geom_smooth, the call which plots the line}
 }
 \description{
 Visualize covariate balance at the discontinuity
 }
 \details{
-The method argument defaults to a linear regression
+Covariate balance tests allow us to visualize
+whether important characteristics differ on either side
+of the regression discontinuity boundary.
+
+The sum_method indicates how data is meant to be binned
+for visualization purposes. Currently it defaults to "raw"
+but it will also accept "mean", "median", and "pointrange",
+which will plot a point-range for each bin on the x axis.
+
+The fit_method argument defaults to a linear regression
 using all the data. Other acceptable arguments are "loess"
 for local linear regression, "gam" for generalized additive
 models, "quadratic" for a quadratic fit using the whole
