@@ -1,0 +1,15 @@
+#' Subset of Washington Drunk Driving BAC Levels
+#' @details This dataset is 1000 randomly sample rows
+#' from Benjamin Hansen's 2015 paper on punishment
+#' and deterrence of drunk driving.
+#' @references Hansen, Benjamin. "Punishment and deterrence: Evidence from drunk driving." American Economic Review 105.4 (2015): 1581-1617.
+#' @format a data.table with 1000 rows and 7 columns
+#' \describe{
+#'   \item{date}{Date of breathalyzer test}
+#'   \item{bac1}{Blood alcohol content from breathalyzer test}
+#'   \item{male}{Indicator for sex of driver, as determined by police}
+#'   \item{white}{Indicator for whether the driver was white, as determined by police}
+#'   \item{aged}{Age of driver}
+#'   \item{recidivism}{Indicator for whether driver drove drunk again}
+#' }
+"hansen_dui"

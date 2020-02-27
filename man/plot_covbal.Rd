@@ -26,7 +26,7 @@ plot_covbal(
 \item{aggregate}{Whether to aggregate observations within each bin for visualization purposes}
 
 \item{geom}{Representation binned points, the name of any geom.
-See [the ggplot2 website](https://ggplot2.tidyverse.org/reference/)}
+See \href{https://ggplot2.tidyverse.org/reference/}{the ggplot2 website}.}
 
 \item{fit_method}{Method to use to fit regression line for balance checks}
 

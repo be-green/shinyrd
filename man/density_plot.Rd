@@ -24,7 +24,7 @@ discontinuity design}
 \item{cutoff}{Cutoff to be used as the discontinuity}
 
 \item{binwidth}{Bin width to be used in histogram,
-will guess via [guess_binwidth] if none is specified}
+will guess via \link{guess_binwidth} if none is specified}
 }
 \description{
 Plot McCrary Density Test
