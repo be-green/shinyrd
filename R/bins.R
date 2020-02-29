@@ -7,7 +7,7 @@
 #' Options currently supported are "mccrary" and "freedman".
 #' for details see [bw_freedman] and [bw_mccrary].
 #' @export
-guess_bw <- function(x, method = c("mccrary", "freedman")) {
+guess_binwidth <- function(x, method = c("mccrary", "freedman")) {
   do.call(paste0("bw_", method), args = list(x = x))
 }
 
@@ -48,7 +48,7 @@ bin <- function(rv, bw = NULL, method = "mccrary") {
   assertthat::assert_that(is.numeric(rv))
 
   if(is.null(bw)) {
-    bw <- guess_bw(rv, method = method)
+    bw <- guess_binwidth(rv, method = method)
   } else {
     assertthat::assert_that(is.numeric(bw))
   }
@@ -80,7 +80,7 @@ bin <- function(rv, bw = NULL, method = "mccrary") {
 #' It returns a data.table that has gone through the first stage of the McCrary density test,
 #' e.g. one with normalized count data for the median of each bin. Bins without
 #' any observations are dropped. For details on the default binning procedure, see
-#' [bin], [guess_bw], [bw_mccrary], and [bw_freedman].
+#' [bin], [guess_binwidth], [bw_mccrary], and [bw_freedman].
 #' @export
 make_grid <- function(rv, cutoff, bw = NULL, normalize = T, method = "mccrary") {
   binned_groups <- list()
