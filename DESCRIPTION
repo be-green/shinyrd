@@ -14,6 +14,7 @@ Imports:
     data.table,
     rdrobust,
     ggplot2,
-    magrittr
+    magrittr,
+    assertthat
 RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)
