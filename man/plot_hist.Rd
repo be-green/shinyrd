@@ -8,7 +8,8 @@ plot_hist(
   data,
   rv,
   cutoff,
-  bw = NULL,
+  binwidth = NULL,
+  method = "mccrary",
   title = NULL,
   subtitle = NULL,
   theme = NULL,
@@ -23,8 +24,10 @@ discontinuity design}
 
 \item{cutoff}{Cutoff to be used as the discontinuity}
 
-\item{bw}{Bin width to be used in histogram,
-will guess via \link{guess_bw} if none is specified}
+\item{binwidth}{Bin width to be used in histogram,
+will guess via \link{guess_binwidth} if none is specified}
+
+\item{method}{method to be used for guessing binwidth}
 }
 \description{
 Plot Density Histogram

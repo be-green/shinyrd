@@ -5,14 +5,14 @@
 \title{Return Binned, Grouped Histogram for running variable,
 above and below cutoff}
 \usage{
-make_grid(rv, cutoff, bw = NULL, normalize = T, method = "mccrary")
+make_grid(rv, cutoff, binwidth = NULL, normalize = T, method = "mccrary")
 }
 \arguments{
 \item{rv}{running variable}
 
 \item{cutoff}{cutoff to be used in discontinuity}
 
-\item{bw}{bin width, defaults to automatic rule specified by method}
+\item{binwidth}{bin width, defaults to automatic rule specified by method}
 
 \item{normalize}{whether to normalize frequencies by the length of the vector}
 
@@ -28,5 +28,5 @@ an optional bandwidth, and an optional method for automated binning procedure.
 It returns a data.table that has gone through the first stage of the McCrary density test,
 e.g. one with normalized count data for the median of each bin. Bins without
 any observations are dropped. For details on the default binning procedure, see
-\link{bin}, \link{guess_bw}, \link{bw_mccrary}, and \link{bw_freedman}.
+\link{bin}, \link{guess_binwidth}, \link{bw_mccrary}, and \link{bw_freedman}.
 }

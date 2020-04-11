@@ -7,7 +7,7 @@
 #' Options currently supported are "mccrary" and "freedman".
 #' for details see [bw_freedman] and [bw_mccrary].
 #' @export
-guess_binwidth <- function(x, method = c("mccrary", "freedman")) {
+guess_binwidth <- function(x, method = c("mccrary")) {
   do.call(paste0("bw_", method), args = list(x = x))
 }
 
@@ -34,7 +34,7 @@ bw_freedman <- function(x) {
 
 #' Bin a variable
 #' @param rv running variable to put in bins
-#' @param bw bandwidth to use for binning procedure
+#' @param binwidth bin width to use for binning procedure
 #' @param method method to use for automatic binning if bw is null
 #' @importFrom assertthat assert_that
 #' @importFrom data.table data.table
@@ -44,32 +44,36 @@ bw_freedman <- function(x) {
 #' Options currently supported are "mccrary" and "freedman".
 #' for details see [bw_freedman] and [bw_mccrary].
 #' @export
-bin <- function(rv, bw = NULL, method = "mccrary") {
+bin <- function(rv, binwidth = NULL, method = "mccrary",
+                signif_digits = 7) {
   assertthat::assert_that(is.numeric(rv))
 
-  if(is.null(bw)) {
-    bw <- guess_binwidth(rv, method = method)
+
+  if(is.null(binwidth)) {
+    binwidth <- guess_binwidth(rv, method = method)
   } else {
-    assertthat::assert_that(is.numeric(bw))
+    assertthat::assert_that(is.numeric(binwidth))
   }
 
-  bins <- seq(min(rv), max(rv), by = bw)
+
+  bins <- seq(min(rv), max(rv), by = binwidth)
 
   med <- vector()
   for(i in 2:length(bins)) {
     med[i - 1] <- median(c(bins[i - 1], bins[i]))
   }
 
-  freq <- tabulate(findInterval(rv, bins, all.inside = T))
+  frequency <- tabulate(findInterval(rv, bins, all.inside = T))
 
 
-  data.table::data.table(bin_median = med, freq = freq)[freq > 0]
+  data.table::data.table(bin_median = med,
+                         freq = as.numeric(frequency))
 }
 
 #' Return Binned, Grouped Histogram for running variable,
 #' above and below cutoff
 #' @param rv running variable
-#' @param bw bin width, defaults to automatic rule specified by method
+#' @param binwidth bin width, defaults to automatic rule specified by method
 #' @param normalize whether to normalize frequencies by the length of the vector
 #' @param method method for determining automatic bin width, defaults to "mccrary"
 #' @param cutoff cutoff to be used in discontinuity
@@ -82,18 +86,30 @@ bin <- function(rv, bw = NULL, method = "mccrary") {
 #' any observations are dropped. For details on the default binning procedure, see
 #' [bin], [guess_binwidth], [bw_mccrary], and [bw_freedman].
 #' @export
-make_grid <- function(rv, cutoff, bw = NULL, normalize = T, method = "mccrary") {
+make_grid <- function(rv, cutoff, binwidth = NULL,
+                      normalize = T, method = "mccrary") {
   binned_groups <- list()
 
   cutoff <- sort(cutoff)
 
-  for(i in 1:(length(cutoff))) {
-    binned_groups[[paste0("<", cutoff[i])]] <- bin(rv = subset(rv, rv < cutoff[i]), bw = bw, method = method)
+
+  if(is.null(binwidth)) {
+    binwidth <- guess_binwidth(rv, method = method)
   }
 
-  binned_groups[[paste0(">=", max(cutoff))]] <- bin(rv = subset(rv, rv >= max(cutoff)), bw = bw, method = method)
+  for(i in 1:(length(cutoff))) {
+    binned_groups[[paste0("<", cutoff[i])]] <- bin(rv = subset(rv, rv < cutoff[i]),
+                                                   binwidth = binwidth,
+                                                   method = method)
+  }
 
-  binned_groups <- data.table::rbindlist(binned_groups, idcol = T, use.names = T)
+  binned_groups[[paste0(">=", max(cutoff))]] <- bin(rv = subset(rv, rv >= max(cutoff)),
+                                                    binwidth = binwidth,
+                                                    method = method)
+
+  binned_groups <- data.table::rbindlist(binned_groups,
+                                         idcol = T,
+                                         use.names = T)
 
   data.table::setnames(binned_groups, ".id", "group")
 
@@ -103,4 +119,3 @@ make_grid <- function(rv, cutoff, bw = NULL, normalize = T, method = "mccrary") 
 
   binned_groups[]
 }
-

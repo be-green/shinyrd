@@ -4,7 +4,8 @@
 \name{hansen_dui}
 \alias{hansen_dui}
 \title{Subset of Washington Drunk Driving BAC Levels}
-\format{a data.table with 1000 rows and 7 columns
+\format{
+a data.table with 1000 rows and 7 columns
 \describe{
 \item{date}{Date of breathalyzer test}
 \item{bac1}{Blood alcohol content from breathalyzer test}
@@ -12,7 +13,8 @@
 \item{white}{Indicator for whether the driver was white, as determined by police}
 \item{aged}{Age of driver}
 \item{recidivism}{Indicator for whether driver drove drunk again}
-}}
+}
+}
 \usage{
 hansen_dui
 }

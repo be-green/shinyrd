@@ -4,12 +4,12 @@
 \alias{bin}
 \title{Bin a variable}
 \usage{
-bin(rv, bw = NULL, method = "mccrary")
+bin(rv, binwidth = NULL, method = "mccrary", signif_digits = 7)
 }
 \arguments{
 \item{rv}{running variable to put in bins}
 
-\item{bw}{bandwidth to use for binning procedure}
+\item{binwidth}{bin width to use for binning procedure}
 
 \item{method}{method to use for automatic binning if bw is null}
 }

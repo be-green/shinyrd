@@ -1,4 +1,3 @@
-
 #' Visualize covariate balance at the discontinuity
 #' @import magrittr
 #' @import ggplot2
